@@ -8,7 +8,7 @@ jobs:
   tests:
     name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    container: ${{matrix.os == 'ubuntu-latest' && fromJson('{"image":"homebrew/brew","options":"--user=linuxbrew"}')}}
+    container: ${{matrix.os == 'ubuntu-latest' && fromJson('{"image":"homebrew/brew","options":"--user=linuxbrew"}') || ""}}
     strategy:
       matrix:
         os:
