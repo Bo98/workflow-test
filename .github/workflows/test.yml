@@ -11,6 +11,7 @@ jobs:
       - run: |
           echo $PATH
           ls -la /opt
+      - run: brew doctor
       - run: sudo chmod -R g-w,o-w /home/linuxbrew
       - run: sudo chmod -R g-w,o-w $HOME
       - run: sudo chmod -R g-w,o-w /opt
