@@ -8,5 +8,10 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - run: sudo chmod -R g-w,o-w /home/linuxbrew $HOME /opt
+      - run: |
+          echo $PATH
+          ls -la /opt
+      - run: sudo chmod -R g-w,o-w /home/linuxbrew
+      - run: sudo chmod -R g-w,o-w $HOME
+      - run: sudo chmod -R g-w,o-w /opt
       - run: sudo rm -rf /usr/share/fonts/cmap
