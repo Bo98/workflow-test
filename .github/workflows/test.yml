@@ -15,6 +15,8 @@ jobs:
       options: --user=linuxbrew
     steps:
       - run: |
+          set -euo pipefail
+
           mkdir -p "$GNUPGHOME"
           chmod 0700 "$GNUPGHOME"
 
@@ -25,8 +27,11 @@ jobs:
           fi
 
           GPG_VERSION=$(gpg --version | head -n1 | cut -d' ' -f3)
+          echo $GPG_VERSION
+          echo `$GPG_EXEC --version`
           GPG_MAJOR=$(echo $GPG_VERSION | cut -d. -f1)
           GPG_MINOR=$(echo $GPG_VERSION | cut -d. -f2)
+          echo $GPG_MAJOR
           if (( GPG_MAJOR > 2 || (GPG_MAJOR == 2 && GPG_MINOR >= 1) )); then
             PINENTRY_MODE="--pinentry-mode loopback"
           else
