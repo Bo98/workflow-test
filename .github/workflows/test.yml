@@ -3,17 +3,38 @@ name: CI
 on:
   push:
 
+env:
+  GNUPGHOME: /tmp/gnupghome
+
 jobs:
   tests:
     name: Test
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/homebrew/ubuntu16.04:master
+      options: --user=linuxbrew
     steps:
       - run: |
-          echo $PATH
-          ls -la /opt
-      - run: brew readall
-      - run: brew audit
-      - name: Set up Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - run: brew doctor
+          mkdir -p "$GNUPGHOME"
+          chmod 0700 "$GNUPGHOME"
+
+          GPG_EXEC=$(command -v gpg)
+          if [ -z "$GPG_EXEC" ]; then
+            echo "GPG not found." >&2
+            exit 1
+          fi
+
+          GPG_VERSION=$(gpg --version | head -n1 | cut -d' ' -f3)
+          GPG_MAJOR=$(echo $GPG_VERSION | cut -d. -f1)
+          GPG_MINOR=$(echo $GPG_VERSION | cut -d. -f2)
+          if (( GPG_MAJOR > 2 || (GPG_MAJOR == 2 && GPG_MINOR >= 1) )); then
+            PINENTRY_MODE="--pinentry-mode loopback"
+          else
+            PINENTRY_MODE=""
+          fi
+
+          # Wrapper script to use passphrase non-interactively with git
+          GPG_WITH_PASSPHRASE=$(mktemp)
+          echo "$GPG_EXEC"' '"$PINENTRY_MODE"' --passphrase "$HOMEBREW_GPG_PASSPHRASE" --batch --no-tty "$@"' > $GPG_WITH_PASSPHRASE
+          chmod +x $GPG_WITH_PASSPHRASE
+          $GPG_WITH_PASSPHRASE test
