@@ -43,3 +43,4 @@ jobs:
           echo "$GPG_EXEC"' '"$PINENTRY_MODE"' --passphrase "$HOMEBREW_GPG_PASSPHRASE" --batch --no-tty "$@"' > $GPG_WITH_PASSPHRASE
           chmod +x $GPG_WITH_PASSPHRASE
           $GPG_WITH_PASSPHRASE test
+        shell: bash
