@@ -8,6 +8,7 @@ class Swifttest < Formula
   head "https://github.com/Flinesoft/BartyCrouch.git", branch: "main"
 
   depends_on "swift" => :build
+  depends_on :xcode => :build
   depends_on :macos
 
   def install
