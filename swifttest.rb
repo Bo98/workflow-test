@@ -7,7 +7,7 @@ class Swifttest < Formula
   license "MIT"
   head "https://github.com/Flinesoft/BartyCrouch.git", branch: "main"
 
-  depends_on xcode: ["13.3", :build]
+  depends_on "swift" => :build
   depends_on :macos
 
   def install
