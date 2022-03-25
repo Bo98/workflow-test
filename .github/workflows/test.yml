@@ -8,12 +8,10 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo $PATH
-          ls -la /opt
-      - run: brew readall
-      - run: brew audit
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
-      - run: brew doctor
+      - run: brew install -sv ./swifttest.rb
