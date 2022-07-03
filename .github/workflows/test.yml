@@ -15,29 +15,29 @@ jobs:
         with:
           github-token: ' '
           script: |
-            console.log(github.rest.activity.listStargazersForRepo({
+            console.log(await github.rest.activity.listStargazersForRepo({
               owner: "Homebrew",
               repo: "brew"
             }));
-            console.log(github.rest.rateLimit.get());
+            console.log(await github.rest.rateLimit.get());
        
       - uses: actions/github-script@v6
         if: always()
         with:
           script: |
-            console.log(github.rest.activity.listStargazersForRepo({
+            console.log(await github.rest.activity.listStargazersForRepo({
               owner: "Homebrew",
               repo: "brew"
             }));
-            console.log(github.rest.rateLimit.get());
+            console.log(await github.rest.rateLimit.get());
 
       - uses: actions/github-script@v6
         if: always()
         with:
           github-token: abc
           script: |
-            console.log(github.rest.activity.listStargazersForRepo({
+            console.log(await github.rest.activity.listStargazersForRepo({
               owner: "Homebrew",
               repo: "brew"
             }));
-            console.log(github.rest.rateLimit.get());
+            console.log(await github.rest.rateLimit.get());
