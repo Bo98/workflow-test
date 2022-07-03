@@ -4,19 +4,40 @@ on:
   push:
   pull_request:
 
+permissions: {}
+
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+    runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - uses: actions/github-script@v6
+        if: always()
+        with:
+          github-token: ''
+          script: |
+            console.log(github.rest.activity.listStargazersForRepo({
+              "Homebrew",
+              "brew"
+            }));
+            console.log(github.rest.rateLimit.get());
+       
+      - uses: actions/github-script@v6
+        if: always()
+        with:
+          script: |
+            console.log(github.rest.activity.listStargazersForRepo({
+              "Homebrew",
+              "brew"
+            }));
+            console.log(github.rest.rateLimit.get());
+
+      - uses: actions/github-script@v6
+        if: always()
+        with:
+          github-token: abc
+          script: |
+            console.log(github.rest.activity.listStargazersForRepo({
+              "Homebrew",
+              "brew"
+            }));
+            console.log(github.rest.rateLimit.get());
