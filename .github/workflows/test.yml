@@ -20,7 +20,6 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
       - run: brew test-bot --only-cleanup-before --tap=homebrew/core
       - run: brew test-bot --only-setup --tap=homebrew/core
-      - run: brew test-bot --only-tap-syntax --tap=homebrew/core
       - run: |
           mkdir bottles
           cd bottles
