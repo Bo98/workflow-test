@@ -7,13 +7,7 @@ on:
 jobs:
   tests:
     name: Test
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/homebrew/ubuntu22.04:master
-      options: --user=linuxbrew
-    defaults:
-      run:
-        working-directory: /github/home
+    runs-on: ubuntu-22.04
     steps:
       - name: Maximize build space
         uses: easimon/maximize-build-space@v6
@@ -30,10 +24,11 @@ jobs:
       - run: |
           mkdir bottles
           cd bottles
+          sed -i 's/def install/def install\n  ENV.append_to_cflags "-DQELFPARSER_DEBUG"/g'
           brew test-bot --only-formulae --tap=homebrew/core qt
       - name: Upload bottles as artifact
         if: always()
         uses: actions/upload-artifact@main
         with:
           name: bottles
-          path: /github/home/bottles
+          path: bottles
