@@ -24,7 +24,7 @@ jobs:
       - run: |
           mkdir bottles
           cd bottles
-          sed -i 's/def install/def install\n  ENV.append_to_cflags "-DQELFPARSER_DEBUG"/g'
+          sed -i 's/def install/def install\n  ENV.append_to_cflags "-DQELFPARSER_DEBUG"/g' "$(brew --repo homebrew/core)/Formula/qt.rb"
           brew test-bot --only-formulae --tap=homebrew/core qt
       - name: Upload bottles as artifact
         if: always()
