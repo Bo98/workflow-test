@@ -6,17 +6,34 @@ on:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+    name: Test
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/homebrew/ubuntu22.04:master
+      options: --user=linuxbrew
+    defaults:
+      run:
+        working-directory: /github/home
     steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@v6
+        with:
+          overprovision-lvm: 'true'
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - run: brew test-bot --only-cleanup-before --tap=homebrew/core
+      - run: brew test-bot --only-setup --tap=homebrew/core
+      - run: brew test-bot --only-tap-syntax --tap=homebrew/core
       - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+          mkdir bottles
+          cd bottles
+          brew test-bot --only-formulae --tap=homebrew/core qt
+      - name: Upload bottles as artifact
+        if: always()
+        uses: actions/upload-artifact@main
+        with:
+          name: bottles
+          path: /github/home/bottles
