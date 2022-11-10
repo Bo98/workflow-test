@@ -13,4 +13,4 @@ jobs:
     steps:
       - run: |
           brew unlink python@3.10
-          brew install --force --overwrite hello
+          brew install --force --overwrite sidekickmoney/homebrew-skm/python@3.10
