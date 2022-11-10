@@ -1,22 +1,16 @@
-name: CI
-
+name: test
 on:
   push:
-  pull_request:
+
+defaults:
+  run:
+    shell: bash -ieo pipefail {0}
 
 jobs:
-  tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+  test:
+    runs-on: "macos-12"
+
     steps:
       - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+          brew unlink python@3.10
+          brew install --force --overwrite hello
