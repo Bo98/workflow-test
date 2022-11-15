@@ -2,21 +2,17 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+    name: Rust test
+    runs-on: ubuntu-latest
+    container: ghcr.io/homebrew/ubuntu22.04:master
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - shell: bash --noprofile --norc -o pipefail {0}
+        run: |
+          for pkg in $(brew uses --eval-all --include-build --formula rust)
+          do
+            brew install -q ${pkg}
+            brew uninstall ${pkg}
+          done
