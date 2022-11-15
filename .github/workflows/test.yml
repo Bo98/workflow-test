@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/homebrew/ubuntu22.04:master
     steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
       - shell: bash --noprofile --norc -o pipefail {0}
         run: |
           for pkg in $(brew uses --eval-all --include-build --formula rust)
