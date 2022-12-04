@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ env.TEST_DIR }}
+        working-directory: ${{ env.TEST_DIR }}/a
     steps:
       - run: |
           echo "'$PWD'"
