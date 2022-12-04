@@ -19,19 +19,3 @@ jobs:
       - run: |
           echo "'$PWD'"
           echo "'$TEST_DIR'"
-  
-  tests2:
-    name: Tests 2
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ steps.teststep.outputs.outdir }}
-    steps:
-      - id: teststep
-        run: |
-          echo "'$PWD'"
-          echo "'${{ steps.teststep.outputs.outdir }}'"
-          echo "outdir=/tmp" >> "$GITHUB_OUTPUT"
-      - run: |
-          echo "'$PWD'"
-          echo "'${{ steps.teststep.outputs.outdir }}'"
