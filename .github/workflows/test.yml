@@ -6,17 +6,32 @@ on:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TEST_DIR }}
     steps:
       - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+          echo "'$PWD'"
+          echo "'$TEST_DIR'"
+          echo "TEST_DIR=/tmp" >> "$GITHUB_ENV"
+      - run: |
+          echo "'$PWD'"
+          echo "'$TEST_DIR'"
+  
+  tests2:
+    name: Tests 2
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ steps.teststep.outputs.outdir }}
+    steps:
+      - id: teststep
+        run: |
+          echo "'$PWD'"
+          echo "'${{ steps.teststep.outputs.outdir }}'"
+          echo "outdir=/tmp" >> "$GITHUB_OUTPUT"
+      - run: |
+          echo "'$PWD'"
+          echo "'${{ steps.teststep.outputs.outdir }}'"
