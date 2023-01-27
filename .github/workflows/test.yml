@@ -8,12 +8,14 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo $PATH
-          ls -la /opt
-      - run: brew readall
-      - run: brew audit
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@setup-homebrew-improvements
+      - run: brew readall
+        if: always()
+      - run: brew audit
+        if: always()
       - run: brew doctor
+        if: always()
+      - run: brew install hello
+        if: always()
