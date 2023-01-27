@@ -11,13 +11,13 @@ jobs:
       - id: teststep
         run: |
            printf "::set-output name=test1::test\ntest2\n"
-           printf "::set-output name=test2::test%0Atest2\n"
-           printf "::set-output name=test3::100%.\n"
-           printf "::set-output name=test4::100%25\n"
+           printf "::set-output name=test2::test\%0Atest2\n"
+           printf "::set-output name=test3::100\%.\n"
+           printf "::set-output name=test4::100\%25\n"
            printf "test5=test\ntest2\n" >> $GITHUB_OUTPUT
-           printf "test6=test%0Atest2\n" >> $GITHUB_OUTPUT
-           printf "test7=100%.\n" >> $GITHUB_OUTPUT
-           printf "test8=100%25\n" >> $GITHUB_OUTPUT
+           printf "test6=test\%0Atest2\n" >> $GITHUB_OUTPUT
+           printf "test7=100\%.\n" >> $GITHUB_OUTPUT
+           printf "test8=100\%25\n" >> $GITHUB_OUTPUT
            printf "test9=a=b\n" >> $GITHUB_OUTPUT
       - run: |
           echo "test1=${{steps.teststep.outputs.test1}}"
