@@ -11,6 +11,7 @@ jobs:
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@setup-homebrew-improvements
+      - run: brew test-bot --only-cleanup-before
       - run: brew readall
         if: always()
       - run: brew audit
@@ -18,4 +19,6 @@ jobs:
       - run: brew doctor
         if: always()
       - run: brew install hello
+        if: always()
+      - run: ls -la ${GITHUB_WORKSPACE} && ls -la ${GITHUB_WORKSPACE}/.. && ls -la $(brew --repo)/Library/Taps && ls -la $(brew --repo)/Library/Taps/bo98
         if: always()
