@@ -40,4 +40,4 @@ jobs:
     steps:
       - run: |
           cd /tmp
-          git clone https://github.com/Homebrew/${{ matrix.repo }}
+          git -c remote.origin.promisor=true clone https://github.com/Homebrew/${{ matrix.repo }}
