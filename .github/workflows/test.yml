@@ -41,7 +41,8 @@ jobs:
       - run: |
           sudo apt-get update
           sudo apt-get install inotify-tools
-          sudo inotifywait -rmd -o /tmp/inotify.log /tmp
+          sudo mkdir /tmp2
+          sudo inotifywait -rmd -o /tmp2/inotify.log /tmp
       - run: |
           cd /tmp
           GIT_TRACE2=/tmp/test.log GIT_TRACE=2 GIT_CURL_VERBOSE=2 GIT_TRACE_PERFORMANCE=2 GIT_TRACE_PACK_ACCESS=2 GIT_TRACE_PACKET=2 GIT_TRACE_SETUP=2 GIT_TRACE_SHALLOW=2 \
@@ -49,6 +50,6 @@ jobs:
       - if: always()
         run: |
           sudo killall inotifywait
-          sudo cat /tmp/inotify.log
+          sudo cat /tmp2/inotify.log
       - if: always()
         run: cat /tmp/test.log
