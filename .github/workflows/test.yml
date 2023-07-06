@@ -42,6 +42,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends inotify-tools
           sudo mkdir /tmp2
+          sudo touch /tmp2/inotify.log
           sudo inotifywait -m -d --outfile /tmp2/inotify.log -r /tmp
       - run: |
           cd /tmp
@@ -49,7 +50,7 @@ jobs:
           git --no-replace-objects clone -c core.useReplaceRefs=false -c remote.origin.promisor=true https://github.com/Homebrew/${{ matrix.repo }}
       - if: always()
         run: |
-          sudo killall inotifywait
+          sudo pkill inotifywait
           sudo cat /tmp2/inotify.log
       - if: always()
         run: cat /tmp/test.log
