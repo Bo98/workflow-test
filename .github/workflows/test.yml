@@ -39,18 +39,5 @@ jobs:
             repo: homebrew-cask
     steps:
       - run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends inotify-tools
-          mkdir /tmp/git
-          sudo touch /tmp/inotify.log
-          sudo inotifywait -m -d --outfile /tmp/inotify.log --format '%T %e %w%f' --timefmt '%T' -r /tmp/git
-      - run: |
-          cd /tmp/git
-          GIT_NO_REPLACE_OBJECTS=1 GIT_TRACE2=/tmp/test.log GIT_TRACE=2 GIT_CURL_VERBOSE=2 GIT_TRACE_PERFORMANCE=2 GIT_TRACE_PACK_ACCESS=2 GIT_TRACE_PACKET=2 GIT_TRACE_SETUP=2 GIT_TRACE_SHALLOW=2 \
-          git --no-replace-objects clone -c core.useReplaceRefs=false -c remote.origin.promisor=true https://github.com/Homebrew/${{ matrix.repo }}
-      - if: always()
-        run: |
-          sudo pkill inotifywait
-          sudo cat /tmp/inotify.log
-      - if: always()
-        run: cat /tmp/test.log
+          cd /tmp
+          git clone https://github.com/Homebrew/${{ matrix.repo }}
