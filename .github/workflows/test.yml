@@ -24,7 +24,7 @@ jobs:
 
       - name: Get Ruby ABI version
         id: ruby-abi
-        run: echo "version=$(brew ruby -e "puts Gem.ruby_api_version")"
+        run: echo "version=$(brew ruby -e "puts Gem.ruby_api_version")" >> "$GITHUB_OUTPUT"
 
       - name: Get gem info
         id: gem-info
