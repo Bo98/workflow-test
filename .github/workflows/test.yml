@@ -1,22 +1,56 @@
 name: CI
 
 on:
-  push:
-  pull_request:
+  push
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+    runs-on: ubuntu-22.04
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          core: false
+          cask: false
+          test-bot: false
+
+      - name: Test co
+        working-directory: ${{ steps.set-up-homebrew.outputs.gems-path }}
+        run: git checkout 512d7c961386649f169d9d495dee0ea736ba867a
+
+      - name: Install Bundler RubyGems
+        run: brew install-bundler-gems --groups=all
+
+      - name: Get Ruby ABI version
+        id: ruby-abi
+        run: echo "version=$(brew ruby -e "puts Gem.ruby_api_version")"
+
+      - name: Get gem info
+        id: gem-info
+        working-directory: ${{ steps.set-up-homebrew.outputs.gems-path }}/${{ steps.ruby-abi.outputs.version }}/gems
+        run: |
+          echo "1" >> ../.homebrew_vendor_version
+          {
+            echo "vendor-version=$(cat ../.homebrew_vendor_version)"
+            echo "ignored<<EOS"
+            git check-ignore *
+            echo "EOS"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Compare to base ref
+        working-directory: ${{ steps.set-up-homebrew.outputs.gems-path }}/${{ steps.ruby-abi.outputs.version }}
+        run: |
+          git checkout 9f21d378cd22a3d9724213fc8624b29b0810b74e
+          rm .homebrew_vendor_version
+          brew install-bundler-gems --groups=all
+          # echo "1" >> .homebrew_vendor_version
+          if [[ "$(cat .homebrew_vendor_version)" == "${{ steps.gem-info.outputs.vendor-version }}" ]]; then
+            ignored_gems="${{ steps.gem-info.outputs.ignored }}"
+            while IFS= read -r gem; do
+              if [[ -d "./gems/${gem}" ]]; then
+                echo "HOMEBREW_VENDOR_VERSION needs bumping in utils/gems.rb" >&2
+                exit 1
+              fi
+            done <<< "${ignored_gems}"
+          fi
