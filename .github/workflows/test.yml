@@ -44,10 +44,14 @@ jobs:
           git checkout f1d345a60e2c02f7e5c1b7930601b1921432cfb6
           rm .homebrew_vendor_version
           brew install-bundler-gems --groups=all
+          echo "TESST"
           echo "1" >> .homebrew_vendor_version
+          echo "!!!"
           if [[ "$(cat .homebrew_vendor_version)" == "${{ steps.gem-info.outputs.vendor-version }}" ]]; then
             ignored_gems="${{ steps.gem-info.outputs.ignored }}"
+            echo "${ignored_gems}"
             while IFS= read -r gem; do
+              echo "./gems/${gem}"
               git check-ignore --quiet "./gems/${gem}"
               exit_code=$?
               if (( exit_code != 0 )); then
@@ -58,5 +62,9 @@ jobs:
                 fi
                 exit "${exit_code}"
               fi
+              echo "EC: ${exit_code}"
             done <<< "${ignored_gems}"
           fi
+          echo "${{ steps.gem-info.outputs.vendor-version }}"
+          echo "$(cat .homebrew_vendor_version)"
+          echo "££££"
