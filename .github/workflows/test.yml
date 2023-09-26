@@ -51,9 +51,11 @@ jobs:
             ignored_gems="${{ steps.gem-info.outputs.ignored }}"
             echo "${ignored_gems}"
             while IFS= read -r gem; do
-              echo "./gems/${gem}"
+              gem_dir="./gems/${gem}"
+              echo "${gem_dir}"
+              [[ -d "${gem_dir}" ]] || continue
               exit_code=0
-              git check-ignore --quiet "./gems/${gem}" || exit_code=$?
+              git check-ignore --quiet "${gem_dir}" || exit_code=$?
               echo "__"
               if (( exit_code != 0 )); then
                 if (( exit_code == 1 )); then
