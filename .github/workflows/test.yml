@@ -49,7 +49,9 @@ jobs:
             ignored_gems="${{ steps.gem-info.outputs.ignored }}"
             while IFS= read -r gem; do
               if [[ -d "./gems/${gem}" ]]; then
-                echo "HOMEBREW_VENDOR_VERSION needs bumping in utils/gems.rb" >&2
+                echo "./gems/${gem} --"
+                ls -l ./gems/
+                echo "::error::HOMEBREW_VENDOR_VERSION needs bumping in utils/gems.rb" >&2
                 exit 1
               fi
             done <<< "${ignored_gems}"
