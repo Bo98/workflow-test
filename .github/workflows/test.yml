@@ -48,11 +48,13 @@ jobs:
           if [[ "$(cat .homebrew_vendor_version)" == "${{ steps.gem-info.outputs.vendor-version }}" ]]; then
             ignored_gems="${{ steps.gem-info.outputs.ignored }}"
             while IFS= read -r gem; do
-              if [[ -d "./gems/${gem}" ]]; then
-                echo "./gems/${gem} --"
-                ls -l ./gems/
-                echo "::error::HOMEBREW_VENDOR_VERSION needs bumping in utils/gems.rb" >&2
-                exit 1
+              git check-ignore --quiet "./gems/${gem}"
+              exit_code=$?
+              if [[ "${exit_code}" -ne 0 ]]; then
+                if [[ "${exit_code}" -eq 1 ]]; then
+                  echo "HOMEBREW_VENDOR_VERSION needs bumping in utils/gems.rb" >&2
+                fi
+                exit "${exit_code}"
               fi
             done <<< "${ignored_gems}"
           fi
