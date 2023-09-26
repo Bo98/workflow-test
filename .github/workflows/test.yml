@@ -17,7 +17,7 @@ jobs:
 
       - name: Test co
         working-directory: ${{ steps.set-up-homebrew.outputs.gems-path }}
-        run: git checkout 512d7c961386649f169d9d495dee0ea736ba867a
+        run: git checkout 9d23bcc87141a41bece0be6960283cd7e66a0f19
 
       - name: Install Bundler RubyGems
         run: brew install-bundler-gems --groups=all
@@ -41,7 +41,7 @@ jobs:
       - name: Compare to base ref
         working-directory: ${{ steps.set-up-homebrew.outputs.gems-path }}/${{ steps.ruby-abi.outputs.version }}
         run: |
-          git checkout 9f21d378cd22a3d9724213fc8624b29b0810b74e
+          git checkout f1d345a60e2c02f7e5c1b7930601b1921432cfb6
           rm .homebrew_vendor_version
           brew install-bundler-gems --groups=all
           echo "1" >> .homebrew_vendor_version
