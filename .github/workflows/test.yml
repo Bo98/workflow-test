@@ -50,9 +50,11 @@ jobs:
             while IFS= read -r gem; do
               git check-ignore --quiet "./gems/${gem}"
               exit_code=$?
-              if [[ "${exit_code}" -ne 0 ]]; then
-                if [[ "${exit_code}" -eq 1 ]]; then
-                  echo "HOMEBREW_VENDOR_VERSION needs bumping in utils/gems.rb" >&2
+              if (( exit_code != 0 )); then
+                if (( exit_code == 1 )); then
+                  echo "::error::HOMEBREW_VENDOR_VERSION needs bumping in utils/gems.rb" >&2
+                else
+                  echo "::error::git check-ignore failed" >&2
                 fi
                 exit "${exit_code}"
               fi
