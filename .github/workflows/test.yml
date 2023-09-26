@@ -52,7 +52,10 @@ jobs:
             echo "${ignored_gems}"
             while IFS= read -r gem; do
               echo "./gems/${gem}"
-              git check-ignore --quiet "./gems/${gem}"
+              (
+                set +e
+                git check-ignore --quiet "./gems/${gem}"
+              )
               exit_code=$?
               if (( exit_code != 0 )); then
                 if (( exit_code == 1 )); then
