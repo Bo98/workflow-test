@@ -44,7 +44,7 @@ jobs:
           git checkout 9f21d378cd22a3d9724213fc8624b29b0810b74e
           rm .homebrew_vendor_version
           brew install-bundler-gems --groups=all
-          # echo "1" >> .homebrew_vendor_version
+          echo "1" >> .homebrew_vendor_version
           if [[ "$(cat .homebrew_vendor_version)" == "${{ steps.gem-info.outputs.vendor-version }}" ]]; then
             ignored_gems="${{ steps.gem-info.outputs.ignored }}"
             while IFS= read -r gem; do
