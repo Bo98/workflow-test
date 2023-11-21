@@ -9,13 +9,15 @@ jobs:
     container:
       image: ghcr.io/homebrew/ubuntu22.04:master
       options: --user=linuxbrew
+    env:
+      XDG_CACHE_HOME: /home/linuxbrew/.cache
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
       - run: |
-          export XDG_CONFIG_HOME=/home/linuxbrew/.cache
+          brew config
           brew install --verbose --build-bottle ca-certificates
           ls -l /home/linuxbrew/.linuxbrew/Cellar/ca-certificates/2023-08-22
           ls -l /home/linuxbrew/.linuxbrew/Cellar/ca-certificates/2023-08-22/share/ca-certificates
@@ -26,3 +28,4 @@ jobs:
           ls -la /github/home/.cache/
           ls -la /github/home
           ls -la /github
+          
