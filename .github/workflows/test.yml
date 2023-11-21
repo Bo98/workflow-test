@@ -6,7 +6,9 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-22.04
-    container: ghcr.io/homebrew/ubuntu22.04:master
+    container:
+      image: ghcr.io/homebrew/ubuntu22.04:master
+      options: --user=linuxbrew
     steps:
       - run: |
           brew install --verbose --build-bottle ca-certificates
