@@ -19,3 +19,9 @@ jobs:
           ls -l /home/linuxbrew/.linuxbrew/Cellar/ca-certificates/2023-08-22
           ls -l /home/linuxbrew/.linuxbrew/Cellar/ca-certificates/2023-08-22/share/ca-certificates
           brew bottle --verbose --json ca-certificates --keep-old --only-json-tab
+          curl --disable --cookie /dev/null --globoff --show-error --header "Accept-Language: en" --fail --silent --retry 3 --remote-time --output /github/home/.cache/Homebrew/downloads/testdl --location https://curl.se/ca/cacert-2023-08-22.pem
+          ls -la /github/home/.cache/Homebrew/downloads
+          ls -la /github/home/.cache/Homebrew
+          ls -la /github/home/.cache/
+          ls -la /github/home
+          ls -la /github
