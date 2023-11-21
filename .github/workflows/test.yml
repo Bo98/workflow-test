@@ -11,6 +11,7 @@ jobs:
       options: --user=linuxbrew
     env:
       XDG_CACHE_HOME: /home/linuxbrew/.cache
+      HOMEBREW_RUBY3: 1
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
