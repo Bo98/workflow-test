@@ -8,9 +8,4 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/homebrew/ubuntu22.04:master
     steps:
-      - run: |
-          echo $GITHUB_ACTIONS
-          echo "$ImageOS"
-          echo "$ImageVersion"
-      - run: brew ruby -e 'p ENV["HOMEBREW_GITHUB_HOSTED_RUNNER"]'
-      - run: umask
+      - run: brew ruby -e 'p File.umask'
