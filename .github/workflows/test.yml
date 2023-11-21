@@ -10,6 +10,10 @@ jobs:
       image: ghcr.io/homebrew/ubuntu22.04:master
       options: --user=linuxbrew
     steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
       - run: |
           brew install --verbose --build-bottle ca-certificates
           brew bottle --verbose --json ca-certificates --keep-old --only-json-tab
