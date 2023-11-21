@@ -8,4 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/homebrew/ubuntu22.04:master
     steps:
-      - run: brew ruby -e 'p File.umask'
+      - run: |
+          brew install --verbose --build-bottle ca-certificates
+          brew bottle --verbose --json ca-certificates --keep-old --only-json-tab
+          sha256sum -b ./ca-certificates--2023-08-22.x86_64_linux.bottle.tar.gz
