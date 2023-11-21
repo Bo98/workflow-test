@@ -19,7 +19,7 @@ jobs:
           brew ruby -e 'p File.umask'
           brew install --verbose --build-bottle ca-certificates
           ls -l /home/linuxbrew/.linuxbrew/Cellar/ca-certificates/2023-08-22
-          ls -l /home/linuxbrew/.linuxbrew/etc/ca-certificate
+          ls -l /home/linuxbrew/.linuxbrew/etc/ca-certificates
           ls -l /home/linuxbrew/.linuxbrew/etc
           ls -l /home/linuxbrew/.linuxbrew
           ls -la /home/linuxbrew
