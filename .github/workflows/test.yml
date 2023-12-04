@@ -1,22 +1,31 @@
-name: CI
+name: test
 
 on:
   push:
-  pull_request:
 
 jobs:
-  tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+  install:
+    runs-on: macos-latest
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - uses: actions/checkout@v2
+        with:
+          repository: databricks/homebrew-tap
+        
+      - name: Configure Git
+        uses: Homebrew/actions/git-user-config@master
+
+      # This action automatically installs the locally checked out tap.
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        env:
+          GITHUB_REPOSITORY: databricks/homebrew-tap
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install CLI
+        run: |
+          brew install databricks
+
+      - name: Run CLI
+        run: |
+          databricks version
