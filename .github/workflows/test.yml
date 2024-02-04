@@ -2,21 +2,24 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+          - os: ubuntu-22.04
+            container: ghcr.io/homebrew/ubuntu22.04:master
+          - os: ubuntu-22.04
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - run: git config --list --show-origin
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          core: true
+
+      - run: git -C "$(brew --repo homebrew/core)" config --list --show-origin
+          
