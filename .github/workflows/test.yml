@@ -2,21 +2,45 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
+    name: LLVM ${{ matrix.llvm }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+        llvm:
+          - 17.0.5
+          - 17.0.4
+          - 17.0.3
+          - 17.0.2
+          - 17.0.1
+          - 16.0.6
+          - 16.0.5
+          - 16.0.4
+          - 16.0.3
+          - 16.0.2
+          - 16.0.1
+          - 16.0.0
+          - 15.0.7
+          - 15.0.6
+          - 15.0.5
+          - 15.0.4
+          - 15.0.3
+          - 15.0.2
+          - 15.0.1
+          - 15.0.0
+          - 14.0.6
+          - 14.0.5
+          - 14.0.4
+          - 14.0.3
+          - 14.0.2
+          - 14.0.1
+          - 14.0.0
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - uses: actions/checkout@v4
+        with:
+          repository: bazel-contrib/toolchains_llvm
+          persist-credentials: false
+
+      - run: utils/llvm_checksums.sh -g -v ${{ matrix.llvm }}
