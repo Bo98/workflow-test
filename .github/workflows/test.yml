@@ -14,3 +14,4 @@ jobs:
       - run: |
           df -h
           ls -la /mnt
+          cat /mnt/DATALOSS_WARNING_README.txt
