@@ -1,7 +1,13 @@
 name: CI
 
 on:
-  push:
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "test"
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   tests:
@@ -9,9 +15,11 @@ jobs:
     container:
       image: ghcr.io/homebrew/ubuntu22.04:master
       volumes:
-        - /mntz:/mntz
+        - /mnt:/mnt
     steps:
       - run: |
           df -h
           ls -la /mnt
-          cat /mnt/DATALOSS_WARNING_README.txt
+          echo "z${INPUT_TEST}z"
+          echo "z${INPUTS_TEST}z"
+          echo "z${{ inputs.test }}z"
