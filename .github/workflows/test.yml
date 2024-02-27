@@ -9,7 +9,7 @@ jobs:
     container:
       image: ghcr.io/homebrew/ubuntu22.04:master
       volumes:
-        - /mnt:/mnt
+        - /mntz:/mntz
     steps:
       - run: |
           df -h
