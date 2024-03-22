@@ -13,4 +13,4 @@ jobs:
 
       - run: brew --version
 
-      - run: git -C "$(brew --repo)" tag --list --sort=creatordate
+      - run: git -C "$(brew --repo)" tag --list --sort="-version:refname"
