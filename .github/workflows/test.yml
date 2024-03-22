@@ -10,3 +10,7 @@ jobs:
       - uses: Homebrew/actions/setup-homebrew@master
         with:
           stable: true
+
+      - run: brew --version
+
+      - run: git -C "$(brew --repo)" tag --list --sort=creatordate
