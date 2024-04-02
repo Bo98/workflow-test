@@ -5,12 +5,11 @@ on:
 
 jobs:
   tests:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
     steps:
-      - uses: Homebrew/actions/setup-homebrew@master
-        with:
-          stable: true
-
-      - run: brew --version
-
-      - run: git -C "$(brew --repo)" tag --list --sort="-version:refname"
+      - run: brew tap
