@@ -12,7 +12,6 @@ jobs:
           - ubuntu-latest
           - macos-latest
     steps:
-      - run:
+      - run: |
           export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-
           brew tap homebrew/bundle
