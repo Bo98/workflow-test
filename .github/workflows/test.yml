@@ -12,4 +12,6 @@ jobs:
           - ubuntu-latest
           - macos-latest
     steps:
-      - run: brew tap
+      - run:
+          export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+          brew tap
