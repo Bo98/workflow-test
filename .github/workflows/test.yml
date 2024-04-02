@@ -14,4 +14,4 @@ jobs:
     steps:
       - run:
           export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-          brew tap
+          brew tap homebrew/bundle
