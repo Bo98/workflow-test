@@ -1,0 +1,15 @@
+name: test
+description: test
+inputs:
+  bottles-directory:
+    description: Bottles directory
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Count bottles
+      id: bottles
+      if: always()
+      run: '"${{ GITHUB_ACTION_PATH }}/count-bottles.sh" "${{ inputs.debug }}"'
+      working-directory: ${{ inputs.bottles-directory }}
+      shell: /bin/bash -euo pipefail {0}
