@@ -12,6 +12,6 @@ jobs:
           - ubuntu-latest
           - macos-latest
     steps:
-      - run: |
-          export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-          brew bundle
+      - uses: ./
+        with:
+          bottle-directory: tpm
