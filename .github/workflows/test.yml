@@ -12,6 +12,6 @@ jobs:
           - ubuntu-latest
           - macos-latest
     steps:
-      - uses: ./
+      - uses: ./.github/workflows
         with:
           bottle-directory: tpm
