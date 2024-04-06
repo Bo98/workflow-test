@@ -12,6 +12,10 @@ jobs:
           - ubuntu-latest
           - macos-latest
     steps:
+      - uses: action/checkout@v4
+        with:
+          persist-credentials: false
+    
       - uses: ./.github/workflows
         with:
           bottle-directory: tpm
