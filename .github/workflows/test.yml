@@ -6,17 +6,6 @@ on:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+    runs-on: macos-14
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - run: ls "$(brew --prefix gcc)/lib/gcc/current"
