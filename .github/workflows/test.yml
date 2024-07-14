@@ -8,3 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: ls -la /opt/hostedtoolcache/Python
+      - run:
+          which -a python
+          which -a python3
+          which -a python3.12
+          which -a python3.11
+          which -a python3.10
