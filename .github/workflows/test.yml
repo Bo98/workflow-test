@@ -10,8 +10,11 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+    
       - run: |
-          cd ${GITHUB_WORKSPACE}
           echo test > test.txt
           rm README.md
           git add test.txt README.md
