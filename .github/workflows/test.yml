@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-13
     steps:
       - run: |
-          cat <foo.c <<EOS
+          cat >foo.c <<EOS
           #include <curl/multi.h>
           
           int main() {
