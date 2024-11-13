@@ -13,7 +13,8 @@ jobs:
           
           int main() {
             CURLM *m = curl_multi_init();
-            curl_multi_get_handles(m);
+            printf("%s\n", curl_version());
+            printf("%p\n", curl_multi_get_handles(m));
             return 0;
           }
           EOS
