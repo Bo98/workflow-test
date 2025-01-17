@@ -5,8 +5,17 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-22.04-arm
+    strategy:
+      matrix:
+        test: [1,2,3]
+        include:
+          - os: ubuntu-latest
+            target: a
+          - os: windows-latest
+            target: b
+          - os: macos-latest
+            target: c
+    runs-on: ${{matrix.os}}
     steps:
       - run: |
-          type -aP ruby
-          ls -la $RUNNER_TOOL_CACHE
+          echo ${{matrix.target}} - ${{matrix.test}}
