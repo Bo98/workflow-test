@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
         test: [1,2,3]
+        target: [a,b,c]
         include:
           - os: ubuntu-latest
             target: a
