@@ -9,10 +9,9 @@ jobs:
       fail-fast: false
       matrix:
         version: ["18.04", "20.04", "22.04", "24.04"]
-        architecture: ["x86_64"]
-        include:
-          - version: "22.04"
-            architecture: "arm64"
+        architecture: ["x86_64", "arm64"]
+        exclude:
+          - architecture: ${{ github.event_name == 'push' && 'arm64' }}
     runs-on: ubuntu-latest
     steps:
       - run: |
