@@ -2,21 +2,23 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+          - os: ubuntu-22.04
+            container: ghcr.io/homebrew/ubuntu22.04:master
+          - os: ubuntu-24.04
+            container: ghcr.io/homebrew/ubuntu22.04:master
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - run: brew install ola
+      - run: ola_plugin_state -h
+      - run: brew uninstall ola && brew install -s ola
+      - run: ola_plugin_state -h
