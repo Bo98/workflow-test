@@ -3,6 +3,9 @@ name: CI
 on:
   push:
 
+env:
+  HOMEBREW_NO_AUTOREMOVE: 1
+
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
@@ -20,5 +23,7 @@ jobs:
 
       - run: brew install ola
       - run: ola_plugin_state -h
-      - run: brew uninstall ola && brew install -s ola
+      - run: brew uninstall ola && brew install --build-bottle ola && brew bottle ola
+      - run: ola_plugin_state -h
+      - run: brew uninstall ola && brew install ./ola--0.10.9_5.x86_64_linux.bottle.1.tar.gz
       - run: ola_plugin_state -h
