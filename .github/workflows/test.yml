@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/homebrew/ubuntu22.04:master
     steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
         with:
