@@ -23,3 +23,4 @@ jobs:
           fi
           ruby -e 'p ENV["TESTENV"]'
           ruby -e 'p ENV["TESTENV2"]'
+          ruby -e 'p ENV["TESTENV3"]'
