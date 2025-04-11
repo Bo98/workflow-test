@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - env:
-          TESTENV: ${{ secrets.ABC && 'abc' }}
+          TESTENV: ${{ secrets.ABC && 'abc' || null }}
           TESTENV2: ${{ github.token && 'abc2' }}
-          TESTENV3: ${{ secrets.ABC }}
+          TESTENV3: null
         run: |
           echo $TESTENV
           echo $TESTENV2
