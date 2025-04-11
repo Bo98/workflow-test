@@ -10,6 +10,7 @@ jobs:
       - env:
           TESTENV: ${{ secrets.ABC && 'abc' }}
           TESTENV2: ${{ github.token && 'abc2' }}
+          TESTENV3: ${{ secrets.ABC }}
         run: |
           echo $TESTENV
           echo $TESTENV2
