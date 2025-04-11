@@ -16,10 +16,10 @@ jobs:
           if [[ -n "$TESTENV" ]]
           then
             echo "1"
-          end
+          fi
           if [[ -n "$TESTENV2" ]]
           then
             echo "2"
-          end
+          fi
           ruby -e 'p ENV["TESTENV"]'
           ruby -e 'p ENV["TESTENV2"]'
