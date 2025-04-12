@@ -2,21 +2,16 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   tests:
-    name: Test on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/ubuntu16.04:master
-          - os: macos-latest
+    runs-on: macos-15
     steps:
-      - run: |
-          echo $GITHUB_WORKSPACE
-          echo "${{ github.workspace }}"
-          echo "${{ matrix.os }}-${{ matrix.container }}"
+      - run: op --version || echo "Not installed"
+
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@v1
+        with:
+          version: latest-beta
+
+      - run: op --version
